@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carina I. Hausladen — Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f5f0;
+    --ink: #1a1714;
+    --ink-mid: #4a4640;
+    --ink-soft: #8a857e;
+    --ink-faint: #c4bfb8;
+    --accent: #2d5a8e;
+    --rule: #e0dbd4;
+
+    --blue:   #2d5a8e;
+    --teal:   #1a7a5e;
+    --purple: #5c4b9e;
+    --amber:  #9a6b1a;
+    --coral:  #b84a2e;
+
+    /* Three tag families */
+    --tc-bg: #e8f0f9; --tc-fg: #1c4070; --tc-border: #9dbfe0;   /* causal   — blue   */
+    --te-bg: #e2f5ec; --te-fg: #0d5035; --te-border: #7ecfab;   /* experimental — teal  */
+    --ti-bg: #fdf3e0; --ti-fg: #6a4010; --ti-border: #e0ba70;   /* impact eval  — amber */
+  }
+
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; }
+
+  .page { max-width: 820px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── Header ── */
+  header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .header-inner { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; }
+  .name { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+  .name em { font-style: italic; color: var(--ink-mid); }
+  .affiliation { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.6rem; letter-spacing: 0.02em; }
+  .bio { margin-top: 1.2rem; font-size: 0.975rem; color: var(--ink-mid); max-width: 560px; line-height: 1.75; }
+  .header-links { display: flex; gap: 0.5rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .header-links a { font-size: 0.8rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 5px 14px; border-radius: 2px; transition: background 0.15s, color 0.15s; }
+  .header-links a:hover { background: var(--accent); color: #fff; }
+  .stats-row { display: flex; gap: 2.5rem; text-align: right; flex-shrink: 0; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; color: var(--ink); }
+  .stat-label { font-size: 0.75rem; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 3px; }
+
+  .section-heading { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 3rem 0 1rem; }
+
+  /* ── Filter tags ── */
+  .filter-tags { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .tag {
+    font-size: 0.82rem;
+    font-weight: 400;
+    padding: 6px 16px;
+    border-radius: 3px;
+    border: 1px solid;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.15s, transform 0.12s, box-shadow 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tag .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .tag:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.10); }
+  .tag.active { box-shadow: 0 0 0 2px currentColor; font-weight: 500; }
+  .tag.dimmed { opacity: 0.28; transform: none; box-shadow: none; }
+
+  .tag-c { background: var(--tc-bg); color: var(--tc-fg); border-color: var(--tc-border); }
+  .tag-c .dot { background: var(--tc-fg); }
+  .tag-e { background: var(--te-bg); color: var(--te-fg); border-color: var(--te-border); }
+  .tag-e .dot { background: var(--te-fg); }
+  .tag-i { background: var(--ti-bg); color: var(--ti-fg); border-color: var(--ti-border); }
+  .tag-i .dot { background: var(--ti-fg); }
+
+  /* Inline pub tags (smaller, non-interactive) */
+  .pub-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+  .pub-tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 3px; border: 1px solid; pointer-events: none; }
+
+  /* Filter status bar */
+  .filter-bar { display: flex; align-items: center; gap: 10px; margin-top: 0.75rem; min-height: 24px; }
+  .filter-clear { font-size: 0.78rem; color: var(--ink-soft); background: none; border: 1px solid var(--rule); border-radius: 3px; padding: 3px 11px; cursor: pointer; display: none; transition: border-color 0.15s, color 0.15s; }
+  .filter-clear:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .filter-clear.visible { display: inline-block; }
+  .filter-status { font-size: 0.78rem; color: var(--ink-soft); font-style: italic; }
+
+  /* ── Theme blocks ── */
+  .theme { margin-bottom: 0.25rem; }
+  .theme-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 0; cursor: pointer; user-select: none; border-top: 1px solid var(--rule); }
+  .theme-header:hover .theme-name { color: var(--accent); }
+  .theme-stripe { width: 4px; height: 22px; border-radius: 2px; flex-shrink: 0; }
+  .theme-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); transition: color 0.15s; flex: 1; }
+  .theme-count { font-size: 0.8rem; color: var(--ink-soft); background: var(--bg); border: 1px solid var(--rule); border-radius: 20px; padding: 2px 10px; white-space: nowrap; }
+  .theme-toggle { font-size: 1.2rem; color: var(--ink-faint); line-height: 1; width: 18px; text-align: center; }
+  .theme-body { overflow: hidden; transition: max-height 0.35s ease; }
+  .theme:last-child .theme-header { border-bottom: 1px solid var(--rule); }
+
+  .pub-grid { padding: 0.25rem 0 1.25rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+  .pub { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; }
+  .pub.hidden { display: none; }
+  .pub-title { font-size: 0.92rem; font-weight: 400; color: var(--ink); line-height: 1.5; }
+  .pub-meta { font-size: 0.8rem; color: var(--ink-soft); margin-top: 2px; line-height: 1.5; }
+  .pub-year { font-size: 0.78rem; font-weight: 500; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; letter-spacing: 0.02em; }
+
+  footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .stats-row { justify-content: flex-start; }
+    .page { padding: 0 1.25rem 4rem; }
+    header { padding: 2.5rem 0 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1 class="name">Carina <em>I.</em> Hausladen</h1>
+        <p class="affiliation">ETH Zurich &nbsp;·&nbsp; Computational Social Science</p>
+        <p class="bio">I study how people make decisions — individually and collectively — using tools from machine learning, experimental economics, and political science. My work spans digital democracy, behavioural honesty, labour market discrimination, and research reproducibility.</p>
+        <nav class="header-links">
+          <a href="#">Google Scholar</a>
+          <a href="#">ORCID</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Email</a>
+        </nav>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-num">27</div>
+          <div class="stat-label">Papers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Themes</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <p class="section-heading">Filter by methodology</p>
+
+  <div class="filter-tags" id="tagPanel">
+    <span class="tag tag-c" data-tag="causal" onclick="filterByTag(this)">
+      <span class="dot"></span>Causal methods
+    </span>
+    <span class="tag tag-e" data-tag="experimental" onclick="filterByTag(this)">
+      <span class="dot"></span>Experimental methods
+    </span>
+    <span class="tag tag-i" data-tag="impact" onclick="filterByTag(this)">
+      <span class="dot"></span>Impact evaluation
+    </span>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-clear" id="clearBtn" onclick="clearFilter()">✕ Clear</button>
+    <span class="filter-status" id="filterStatus"></span>
+  </div>
+
+  <p class="section-heading" style="margin-top: 2.5rem;">Research &amp; publications</p>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 1 — Political economy & democratic participation
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t1">
+    <div class="theme-header" onclick="toggle('t1')">
+      <div class="theme-stripe" style="background: var(--blue);"></div>
+      <span class="theme-name">Political economy &amp; democratic participation</span>
+      <span class="theme-count" id="t1-count">7 papers</span>
+      <span class="theme-toggle" id="t1-icon">+</span>
+    </div>
+    <div class="theme-body" id="t1-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental + impact: voting rules treated as policy intervention,
+             effect on legitimacy outcomes measured -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">How voting rules impact legitimacy</div>
+            <div class="pub-meta">Humanities and Social Sciences Communications &nbsp;·&nbsp; Hausladen, Hänggli Fricker, Helbing, Kunz, Wang, Pournaras</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- causal + experimental + impact: evaluates participatory budgeting designs
+             as social-policy interventions, measuring fairness/legitimacy outcomes -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">Designing digital voting systems for citizens: achieving fairness and legitimacy in participatory budgeting</div>
+            <div class="pub-meta">Digital Government: Research and Practice &nbsp;·&nbsp; Yang, Hausladen, Peters, Pournaras, Hänggli Fricker, Helbing</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- experimental only: online experiment comparing LLM vs human voting behaviour -->
+        <div class="pub" data-tags="experimental">
+          <div>
+            <div class="pub-title">LLM voting: human choices and AI collective decision making</div>
+            <div class="pub-meta">AAAI/ACM Conference on AI, Ethics, and Society &nbsp;·&nbsp; Yang, Korecki, Dailisan, Hausladen, Helbing</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- causal + experimental + impact: evaluates effect of institutional design
+             (participatory budgeting) on perceived legitimacy in a Swiss municipality -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">Exploring legitimacy in a municipal budget decision in Switzerland</div>
+            <div class="pub-meta">Philosophical Transactions of the Royal Society A &nbsp;·&nbsp; Hänggli Fricker, Wellings, Zai, Yang, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- no methodology tags: conceptual/design paper -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Democracy by design: perspectives for digitally assisted, participatory upgrades of society</div>
+            <div class="pub-meta">Journal of Computational Science &nbsp;·&nbsp; Helbing, Mahajan, Hausladen et al.</div>
+          </div>
+          <div class="pub-year">2023</div>
+        </div>
+
+        <!-- experimental: platform for running voting experiments -->
+        <div class="pub" data-tags="experimental">
+          <div>
+            <div class="pub-title">Votelab: a modular and adaptive experimentation platform for online collective decision making</div>
+            <div class="pub-meta">arXiv &nbsp;·&nbsp; Kunz, Banaie, Sharma, Hausladen, Helbing, Pournaras</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2023</div>
+        </div>
+
+        <!-- causal + experimental: replication of a lab experiment on electoral rules -->
+        <div class="pub" data-tags="causal experimental">
+          <div>
+            <div class="pub-title">Replicating "Run-off elections in the laboratory"</div>
+            <div class="pub-meta">I4R Discussion Paper Series &nbsp;·&nbsp; Hausladen, Hu, Levin</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 2 — Poverty, social inequalities & labour markets
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t2">
+    <div class="theme-header" onclick="toggle('t2')">
+      <div class="theme-stripe" style="background: var(--teal);"></div>
+      <span class="theme-name">Poverty, social inequalities &amp; labour markets</span>
+      <span class="theme-count" id="t2-count">4 papers</span>
+      <span class="theme-toggle" id="t2-icon">+</span>
+    </div>
+    <div class="theme-body" id="t2-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental + impact: audit/correspondence field experiments,
+             meta-analysis of causal callback effects — core impact evaluation -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">Perceived warmth and competence predict callback rates in meta-analyzed North American labour market experiments</div>
+            <div class="pub-meta">PLoS ONE &nbsp;·&nbsp; Gallo*, Hausladen*, Hsu, Jenkins, Ona, Camerer</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- no methodology tags: observational/ML study of model bias -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Social perception of faces in a vision-language model</div>
+            <div class="pub-meta">ACM FAccT &nbsp;·&nbsp; Hausladen, Knott, Camerer, Perona</div>
+          </div>
+          <div class="pub-year">2025</div>
+        </div>
+
+        <!-- no methodology tags: theoretical/review chapter -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Socio-economic implications of the digital revolution</div>
+            <div class="pub-meta">Handbook of Complexity Economics &nbsp;·&nbsp; Helbing &amp; Hausladen</div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- no methodology tags: normative/design paper -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Ethics of smart cities: towards value-sensitive design and co-evolving city life</div>
+            <div class="pub-meta">Sustainability &nbsp;·&nbsp; Helbing, Fanitabasi, Hausladen et al.</div>
+          </div>
+          <div class="pub-year">2021</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 3 — Behavioural economics & decision-making
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t3">
+    <div class="theme-header" onclick="toggle('t3')">
+      <div class="theme-stripe" style="background: var(--purple);"></div>
+      <span class="theme-name">Behavioural economics &amp; decision-making</span>
+      <span class="theme-count" id="t3-count">5 papers</span>
+      <span class="theme-toggle" id="t3-icon">+</span>
+    </div>
+    <div class="theme-body" id="t3-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental: controlled lab experiment; IRL recovers latent
+             intentions — causal test of behavioural interventions for policy compliance -->
+        <div class="pub" data-tags="causal experimental">
+          <div>
+            <div class="pub-title">Identifying latent intentions via inverse reinforcement learning in repeated linear public good games</div>
+            <div class="pub-meta">arXiv &nbsp;·&nbsp; Hausladen, Schubert, Engel</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2026</div>
+        </div>
+
+        <!-- causal + experimental: randomised lab experiment on time pressure and honesty -->
+        <div class="pub" data-tags="causal experimental">
+          <div>
+            <div class="pub-title">Color me honest! Time pressure and dis(honest) behavior</div>
+            <div class="pub-meta">Frontiers in Behavioral Economics &nbsp;·&nbsp; Hausladen &amp; Nikolaychuk</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- causal + experimental: lab experiment identifying cooperation types -->
+        <div class="pub" data-tags="causal experimental">
+          <div>
+            <div class="pub-title">Charting the type space — the case of linear public good experiments</div>
+            <div class="pub-meta">SSRN Working Paper &nbsp;·&nbsp; Engel, Hausladen, Schubert</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2022</div>
+        </div>
+
+        <!-- experimental only: online networked experiment -->
+        <div class="pub" data-tags="experimental">
+          <div>
+            <div class="pub-title">How do circadian rhythms and neural synchrony shape networked cooperation?</div>
+            <div class="pub-meta">Frontiers in Physics &nbsp;·&nbsp; Vasiliauskaite &amp; Hausladen</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2023</div>
+        </div>
+
+        <!-- causal + experimental: ML-enhanced experimental economics thesis -->
+        <div class="pub" data-tags="causal experimental">
+          <div>
+            <div class="pub-title">Behavioral economics-enhanced: machine learning and decision making</div>
+            <div class="pub-meta">PhD Thesis &nbsp;·&nbsp; University of Cologne</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2020</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 4 — Health, behaviour & social policy
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t4">
+    <div class="theme-header" onclick="toggle('t4')">
+      <div class="theme-stripe" style="background: var(--amber);"></div>
+      <span class="theme-name">Health, behaviour &amp; social policy</span>
+      <span class="theme-count" id="t4-count">3 papers</span>
+      <span class="theme-toggle" id="t4-icon">+</span>
+    </div>
+    <div class="theme-body" id="t4-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal: quasi-experimental (time-of-day as natural variation),
+             observational causal inference -->
+        <div class="pub" data-tags="causal">
+          <div>
+            <div class="pub-title">Early morning and evening usage habits increase misinformation spread</div>
+            <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Stockinger, Gallotti, Hausladen</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- causal + experimental + impact: lab experiment with compliance intervention;
+             ML classifies compliance — evaluates impact of framing on compliance behaviour -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">Predicting compliance: leveraging chat data for supervised classification in experimental research</div>
+            <div class="pub-meta">Journal of Behavioral and Experimental Economics &nbsp;·&nbsp; Hausladen, Fochmann, Mohr</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- causal + experimental + impact: evaluates participatory resilience interventions
+             — collective interventions for recovering from crises; core impact evaluation -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">Participatory resilience: surviving, recovering and improving together</div>
+            <div class="pub-meta">Sustainable Cities and Society &nbsp;·&nbsp; Mahajan*, Hausladen* et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2022</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 5 — Research methods & reproducibility
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t5">
+    <div class="theme-header" onclick="toggle('t5')">
+      <div class="theme-stripe" style="background: var(--coral);"></div>
+      <span class="theme-name">Research methods &amp; reproducibility</span>
+      <span class="theme-count" id="t5-count">6 papers</span>
+      <span class="theme-toggle" id="t5-icon">+</span>
+    </div>
+    <div class="theme-body" id="t5-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + impact: large-scale replication study of causal/quasi-experimental
+             economics and political science papers — directly assesses robustness of
+             impact evaluation evidence -->
+        <div class="pub" data-tags="causal impact">
+          <div>
+            <div class="pub-title">Reproducibility and robustness of economics and political science research</div>
+            <div class="pub-meta">Nature &nbsp;·&nbsp; Brodeur, Mikola, Cook, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2026</div>
+        </div>
+
+        <!-- causal + impact: computational replication of empirical social-science papers -->
+        <div class="pub" data-tags="causal impact">
+          <div>
+            <div class="pub-title">Computational reproducibility and robustness of empirical economics and political science research, 2022–2023</div>
+            <div class="pub-meta">I4R Discussion Paper &nbsp;·&nbsp; Brodeur, Mikola, Cook, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2026</div>
+        </div>
+
+        <!-- no methodology tags: meta-study of AI assistance in reproducibility workflows -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Comparing human-only, AI-assisted, and AI-led teams on assessing research reproducibility</div>
+            <div class="pub-meta">I4R Discussion Paper &nbsp;·&nbsp; Brodeur, Valenta, Hausladen et al.</div>
+          </div>
+          <div class="pub-year">2025</div>
+        </div>
+
+        <!-- causal + impact: large-scale replication exercise across social-science literatures -->
+        <div class="pub" data-tags="causal impact">
+          <div>
+            <div class="pub-title">Mass reproducibility and replicability: a new hope</div>
+            <div class="pub-meta">IZA Discussion Paper &nbsp;·&nbsp; Brodeur, Mikola, Cook et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+        <!-- no methodology tags: ML/NLP classification paper, no causal claim -->
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title">Text classification of ideological direction in judicial opinions</div>
+            <div class="pub-meta">International Review of Law and Economics &nbsp;·&nbsp; Hausladen, Schubert, Ash</div>
+          </div>
+          <div class="pub-year">2020</div>
+        </div>
+
+        <!-- causal + experimental + impact: VR field experiment testing causal effects
+             of urban-design interventions on pedestrian behaviour/perception;
+             direct impact evaluation of sustainable urban-planning interventions -->
+        <div class="pub" data-tags="causal experimental impact">
+          <div>
+            <div class="pub-title">A virtual reality experiment to study pedestrian perception of future street scenarios</div>
+            <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Argota Sánchez-Vaquerizo, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-c">Causal methods</span>
+              <span class="pub-tag tag-e">Experimental methods</span>
+              <span class="pub-tag tag-i">Impact evaluation</span>
+            </div>
+          </div>
+          <div class="pub-year">2024</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Carina I. Hausladen &nbsp;·&nbsp; ETH Zurich</span>
+    <span>Updated April 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  let activeTag = null;
+
+  function toggle(id) {
+    const body = document.getElementById(id + '-body');
+    const icon = document.getElementById(id + '-icon');
+    const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+    if (isOpen) {
+      body.style.maxHeight = '0';
+      icon.textContent = '+';
+    } else {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      icon.textContent = '×';
+    }
+  }
+
+  function filterByTag(el) {
+    const tag = el.dataset.tag;
+    if (activeTag === tag) { clearFilter(); return; }
+    activeTag = tag;
+
+    document.querySelectorAll('#tagPanel .tag').forEach(t => {
+      t.classList.toggle('active', t.dataset.tag === tag);
+      t.classList.toggle('dimmed', t.dataset.tag !== tag);
+    });
+
+    let total = 0;
+    for (let i = 1; i <= 5; i++) {
+      const body = document.getElementById('t' + i + '-body');
+      const pubs = body.querySelectorAll('.pub');
+      let visible = 0;
+      pubs.forEach(pub => {
+        const tags = (pub.dataset.tags || '').split(' ').filter(Boolean);
+        const match = tags.includes(tag);
+        pub.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+      total += visible;
+      const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+      if (visible > 0) {
+        if (!isOpen) document.getElementById('t' + i + '-icon').textContent = '×';
+        setTimeout(() => { body.style.maxHeight = body.scrollHeight + 'px'; }, 10);
+      } else if (isOpen) {
+        body.style.maxHeight = '0';
+        document.getElementById('t' + i + '-icon').textContent = '+';
+      }
+      document.getElementById('t' + i + '-count').textContent =
+        visible + ' of ' + pubs.length + ' paper' + (pubs.length !== 1 ? 's' : '');
+    }
+
+    document.getElementById('filterStatus').textContent =
+      total + ' paper' + (total !== 1 ? 's' : '') + ' match this tag';
+    document.getElementById('clearBtn').classList.add('visible');
+  }
+
+  function clearFilter() {
+    activeTag = null;
+    document.querySelectorAll('#tagPanel .tag').forEach(t => t.classList.remove('active', 'dimmed'));
+    document.querySelectorAll('.pub').forEach(p => p.classList.remove('hidden'));
+    document.getElementById('filterStatus').textContent = '';
+    document.getElementById('clearBtn').classList.remove('visible');
+    for (let i = 1; i <= 5; i++) {
+      const body = document.getElementById('t' + i + '-body');
+      const total = body.querySelectorAll('.pub').length;
+      document.getElementById('t' + i + '-count').textContent = total + ' papers';
+      if (body.style.maxHeight !== '0px' && body.style.maxHeight !== '') {
+        setTimeout(() => { body.style.maxHeight = body.scrollHeight + 'px'; }, 10);
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => { toggle('t1'); });
+</script>
+</body>
+</html>
