@@ -27,9 +27,10 @@
     --coral:  #b84a2e;
 
     /* Three tag families */
-    --tc-bg: #e6eef5; --tc-fg: #002147; --tc-border: #8aaecf;   /* causal   — Oxford blue */
-    --te-bg: #d6feff; --te-fg: #002147; --te-border: #00c8d4;   /* experimental — Oxford cyan */
-    --ti-bg: #fdf3e0; --ti-fg: #6a4010; --ti-border: #e0ba70;   /* impact eval  — amber   */
+    --tc-bg: #e6eef5; --tc-fg: #002147; --tc-border: #8aaecf;   /* causal        — Oxford blue */
+    --te-bg: #d6feff; --te-fg: #002147; --te-border: #00c8d4;   /* experimental  — Oxford cyan */
+    --ti-bg: #fdf3e0; --ti-fg: #6a4010; --ti-border: #e0ba70;   /* impact eval   — amber       */
+    --tf-bg: #f0ecfa; --tf-fg: #3a1f6e; --tf-border: #c4aeed;   /* first author  — purple      */
   }
 
   html { font-size: 16px; }
@@ -76,6 +77,10 @@
   .tag-c { background: var(--tc-bg); color: var(--tc-fg); border-color: var(--tc-border); }
   .tag-e { background: var(--te-bg); color: var(--te-fg); border-color: var(--te-border); }
   .tag-i { background: var(--ti-bg); color: var(--ti-fg); border-color: var(--ti-border); }
+  .tag-f { background: var(--tf-bg); color: var(--tf-fg); border-color: var(--tf-border); }
+
+  a.pub-link { color: inherit; text-decoration: none; }
+  a.pub-link:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
   /* Inline pub tags (smaller, non-interactive) */
   .pub-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
@@ -158,13 +163,16 @@
 
   <div class="filter-tags" id="tagPanel">
     <span class="tag tag-c" data-tag="causal" onclick="filterByTag(this)">
-      <span class="dot"></span>Causal methods
+      Causal methods
     </span>
     <span class="tag tag-e" data-tag="experimental" onclick="filterByTag(this)">
-      <span class="dot"></span>Experimental methods
+      Experimental methods
     </span>
     <span class="tag tag-i" data-tag="impact" onclick="filterByTag(this)">
-      <span class="dot"></span>Impact evaluation
+      Impact evaluation
+    </span>
+    <span class="tag tag-f" data-tag="first" onclick="filterByTag(this)">
+      First / joint-first author
     </span>
   </div>
 
@@ -190,9 +198,9 @@
 
         <!-- causal + experimental + impact: voting rules treated as policy intervention,
              effect on legitimacy outcomes measured -->
-        <div class="pub" data-tags="causal experimental impact">
+        <div class="pub" data-tags="causal experimental impact first">
           <div>
-            <div class="pub-title">How voting rules impact legitimacy</div>
+            <div class="pub-title"><a href="#" class="pub-link">How voting rules impact legitimacy</a></div>
             <div class="pub-meta">Humanities and Social Sciences Communications &nbsp;·&nbsp; Hausladen, Hänggli Fricker, Helbing, Kunz, Wang, Pournaras</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -207,7 +215,7 @@
              as social-policy interventions, measuring fairness/legitimacy outcomes -->
         <div class="pub" data-tags="causal experimental impact">
           <div>
-            <div class="pub-title">Designing digital voting systems for citizens: achieving fairness and legitimacy in participatory budgeting</div>
+            <div class="pub-title"><a href="#" class="pub-link">Designing digital voting systems for citizens: achieving fairness and legitimacy in participatory budgeting</a></div>
             <div class="pub-meta">Digital Government: Research and Practice &nbsp;·&nbsp; Yang, Hausladen, Peters, Pournaras, Hänggli Fricker, Helbing</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -221,7 +229,7 @@
         <!-- experimental only: online experiment comparing LLM vs human voting behaviour -->
         <div class="pub" data-tags="experimental">
           <div>
-            <div class="pub-title">LLM voting: human choices and AI collective decision making</div>
+            <div class="pub-title"><a href="#" class="pub-link">LLM voting: human choices and AI collective decision making</a></div>
             <div class="pub-meta">AAAI/ACM Conference on AI, Ethics, and Society &nbsp;·&nbsp; Yang, Korecki, Dailisan, Hausladen, Helbing</div>
             <div class="pub-tags">
               <span class="pub-tag tag-e">Experimental methods</span>
@@ -234,7 +242,7 @@
              (participatory budgeting) on perceived legitimacy in a Swiss municipality -->
         <div class="pub" data-tags="causal experimental impact">
           <div>
-            <div class="pub-title">Exploring legitimacy in a municipal budget decision in Switzerland</div>
+            <div class="pub-title"><a href="#" class="pub-link">Exploring legitimacy in a municipal budget decision in Switzerland</a></div>
             <div class="pub-meta">Philosophical Transactions of the Royal Society A &nbsp;·&nbsp; Hänggli Fricker, Wellings, Zai, Yang, Hausladen et al.</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -248,7 +256,7 @@
         <!-- no methodology tags: conceptual/design paper -->
         <div class="pub" data-tags="">
           <div>
-            <div class="pub-title">Democracy by design: perspectives for digitally assisted, participatory upgrades of society</div>
+            <div class="pub-title"><a href="#" class="pub-link">Democracy by design: perspectives for digitally assisted, participatory upgrades of society</a></div>
             <div class="pub-meta">Journal of Computational Science &nbsp;·&nbsp; Helbing, Mahajan, Hausladen et al.</div>
           </div>
           <div class="pub-year">2023</div>
@@ -257,7 +265,7 @@
         <!-- experimental: platform for running voting experiments -->
         <div class="pub" data-tags="experimental">
           <div>
-            <div class="pub-title">Votelab: a modular and adaptive experimentation platform for online collective decision making</div>
+            <div class="pub-title"><a href="#" class="pub-link">Votelab: a modular and adaptive experimentation platform for online collective decision making</a></div>
             <div class="pub-meta">arXiv &nbsp;·&nbsp; Kunz, Banaie, Sharma, Hausladen, Helbing, Pournaras</div>
             <div class="pub-tags">
               <span class="pub-tag tag-e">Experimental methods</span>
@@ -267,9 +275,9 @@
         </div>
 
         <!-- causal + experimental: replication of a lab experiment on electoral rules -->
-        <div class="pub" data-tags="causal experimental">
+        <div class="pub" data-tags="causal experimental first">
           <div>
-            <div class="pub-title">Replicating "Run-off elections in the laboratory"</div>
+            <div class="pub-title"><a href="#" class="pub-link">Replicating "Run-off elections in the laboratory"</a></div>
             <div class="pub-meta">I4R Discussion Paper Series &nbsp;·&nbsp; Hausladen, Hu, Levin</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -298,9 +306,9 @@
 
         <!-- causal + experimental + impact: audit/correspondence field experiments,
              meta-analysis of causal callback effects — core impact evaluation -->
-        <div class="pub" data-tags="causal experimental impact">
+        <div class="pub" data-tags="causal experimental impact first">
           <div>
-            <div class="pub-title">Perceived warmth and competence predict callback rates in meta-analyzed North American labour market experiments</div>
+            <div class="pub-title"><a href="#" class="pub-link">Perceived warmth and competence predict callback rates in meta-analyzed North American labour market experiments</a></div>
             <div class="pub-meta">PLoS ONE &nbsp;·&nbsp; Hausladen*, Gallo*, Hsu, Jenkins, Ona, Camerer</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -312,9 +320,9 @@
         </div>
 
         <!-- no methodology tags: observational/ML study of model bias -->
-        <div class="pub" data-tags="">
+        <div class="pub" data-tags="first">
           <div>
-            <div class="pub-title">Social perception of faces in a vision-language model</div>
+            <div class="pub-title"><a href="#" class="pub-link">Social perception of faces in a vision-language model</a></div>
             <div class="pub-meta">ACM FAccT &nbsp;·&nbsp; Hausladen, Knott, Camerer, Perona</div>
           </div>
           <div class="pub-year">2025</div>
@@ -323,7 +331,7 @@
         <!-- no methodology tags: theoretical/review chapter -->
         <div class="pub" data-tags="">
           <div>
-            <div class="pub-title">Socio-economic implications of the digital revolution</div>
+            <div class="pub-title"><a href="#" class="pub-link">Socio-economic implications of the digital revolution</a></div>
             <div class="pub-meta">Handbook of Complexity Economics &nbsp;·&nbsp; Helbing &amp; Hausladen</div>
           </div>
           <div class="pub-year">2024</div>
@@ -332,7 +340,7 @@
         <!-- no methodology tags: normative/design paper -->
         <div class="pub" data-tags="">
           <div>
-            <div class="pub-title">Ethics of smart cities: towards value-sensitive design and co-evolving city life</div>
+            <div class="pub-title"><a href="#" class="pub-link">Ethics of smart cities: towards value-sensitive design and co-evolving city life</a></div>
             <div class="pub-meta">Sustainability &nbsp;·&nbsp; Helbing, Fanitabasi, Hausladen et al.</div>
           </div>
           <div class="pub-year">2021</div>
@@ -357,9 +365,9 @@
 
         <!-- causal + experimental: controlled lab experiment; IRL recovers latent
              intentions — causal test of behavioural interventions for policy compliance -->
-        <div class="pub" data-tags="causal experimental">
+        <div class="pub" data-tags="causal experimental first">
           <div>
-            <div class="pub-title">Identifying latent intentions via inverse reinforcement learning in repeated linear public good games</div>
+            <div class="pub-title"><a href="#" class="pub-link">Identifying latent intentions via inverse reinforcement learning in repeated linear public good games</a></div>
             <div class="pub-meta">arXiv &nbsp;·&nbsp; Hausladen, Schubert, Engel</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -370,9 +378,9 @@
         </div>
 
         <!-- causal + experimental: randomised lab experiment on time pressure and honesty -->
-        <div class="pub" data-tags="causal experimental">
+        <div class="pub" data-tags="causal experimental first">
           <div>
-            <div class="pub-title">Color me honest! Time pressure and dis(honest) behavior</div>
+            <div class="pub-title"><a href="#" class="pub-link">Color me honest! Time pressure and dis(honest) behavior</a></div>
             <div class="pub-meta">Frontiers in Behavioral Economics &nbsp;·&nbsp; Hausladen &amp; Nikolaychuk</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -385,7 +393,7 @@
         <!-- experimental only: online networked experiment -->
         <div class="pub" data-tags="experimental">
           <div>
-            <div class="pub-title">How do circadian rhythms and neural synchrony shape networked cooperation?</div>
+            <div class="pub-title"><a href="#" class="pub-link">How do circadian rhythms and neural synchrony shape networked cooperation?</a></div>
             <div class="pub-meta">Frontiers in Physics &nbsp;·&nbsp; Vasiliauskaite &amp; Hausladen</div>
             <div class="pub-tags">
               <span class="pub-tag tag-e">Experimental methods</span>
@@ -395,9 +403,9 @@
         </div>
 
         <!-- causal + experimental: ML-enhanced experimental economics thesis -->
-        <div class="pub" data-tags="causal experimental">
+        <div class="pub" data-tags="causal experimental first">
           <div>
-            <div class="pub-title">Behavioral economics-enhanced: machine learning and decision making</div>
+            <div class="pub-title"><a href="#" class="pub-link">Behavioral economics-enhanced: machine learning and decision making</a></div>
             <div class="pub-meta">PhD Thesis &nbsp;·&nbsp; University of Cologne</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -428,7 +436,7 @@
              observational causal inference -->
         <div class="pub" data-tags="causal">
           <div>
-            <div class="pub-title">Early morning and evening usage habits increase misinformation spread</div>
+            <div class="pub-title"><a href="#" class="pub-link">Early morning and evening usage habits increase misinformation spread</a></div>
             <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Stockinger, Gallotti, Hausladen</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -439,9 +447,9 @@
 
         <!-- causal + experimental + impact: lab experiment with compliance intervention;
              ML classifies compliance — evaluates impact of framing on compliance behaviour -->
-        <div class="pub" data-tags="causal experimental impact">
+        <div class="pub" data-tags="causal experimental impact first">
           <div>
-            <div class="pub-title">Predicting compliance: leveraging chat data for supervised classification in experimental research</div>
+            <div class="pub-title"><a href="#" class="pub-link">Predicting compliance: leveraging chat data for supervised classification in experimental research</a></div>
             <div class="pub-meta">Journal of Behavioral and Experimental Economics &nbsp;·&nbsp; Hausladen, Fochmann, Mohr</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -454,9 +462,9 @@
 
         <!-- causal + experimental + impact: evaluates participatory resilience interventions
              — collective interventions for recovering from crises; core impact evaluation -->
-        <div class="pub" data-tags="causal experimental impact">
+        <div class="pub" data-tags="causal experimental impact first">
           <div>
-            <div class="pub-title">Participatory resilience: surviving, recovering and improving together</div>
+            <div class="pub-title"><a href="#" class="pub-link">Participatory resilience: surviving, recovering and improving together</a></div>
             <div class="pub-meta">Sustainable Cities and Society &nbsp;·&nbsp; Mahajan*, Hausladen* et al.</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -489,7 +497,7 @@
              impact evaluation evidence -->
         <div class="pub" data-tags="causal impact">
           <div>
-            <div class="pub-title">Reproducibility and robustness of economics and political science research</div>
+            <div class="pub-title"><a href="#" class="pub-link">Reproducibility and robustness of economics and political science research</a></div>
             <div class="pub-meta">Nature &nbsp;·&nbsp; Brodeur, Mikola, Cook, Hausladen et al.</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -502,7 +510,7 @@
         <!-- no methodology tags: meta-study of AI assistance in reproducibility workflows -->
         <div class="pub" data-tags="">
           <div>
-            <div class="pub-title">Comparing human-only, AI-assisted, and AI-led teams on assessing research reproducibility</div>
+            <div class="pub-title"><a href="#" class="pub-link">Comparing human-only, AI-assisted, and AI-led teams on assessing research reproducibility</a></div>
             <div class="pub-meta">I4R Discussion Paper &nbsp;·&nbsp; Brodeur, Valenta, Hausladen et al.</div>
           </div>
           <div class="pub-year">2025</div>
@@ -511,7 +519,7 @@
         <!-- causal + impact: large-scale replication exercise across social-science literatures -->
         <div class="pub" data-tags="causal impact">
           <div>
-            <div class="pub-title">Mass reproducibility and replicability: a new hope</div>
+            <div class="pub-title"><a href="#" class="pub-link">Mass reproducibility and replicability: a new hope</a></div>
             <div class="pub-meta">IZA Discussion Paper &nbsp;·&nbsp; Brodeur, Mikola, Cook et al.</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
@@ -522,9 +530,9 @@
         </div>
 
         <!-- no methodology tags: ML/NLP classification paper, no causal claim -->
-        <div class="pub" data-tags="">
+        <div class="pub" data-tags="first">
           <div>
-            <div class="pub-title">Text classification of ideological direction in judicial opinions</div>
+            <div class="pub-title"><a href="#" class="pub-link">Text classification of ideological direction in judicial opinions</a></div>
             <div class="pub-meta">International Review of Law and Economics &nbsp;·&nbsp; Hausladen, Schubert, Ash</div>
           </div>
           <div class="pub-year">2020</div>
@@ -535,7 +543,7 @@
              direct impact evaluation of sustainable urban-planning interventions -->
         <div class="pub" data-tags="causal experimental impact">
           <div>
-            <div class="pub-title">A virtual reality experiment to study pedestrian perception of future street scenarios</div>
+            <div class="pub-title"><a href="#" class="pub-link">A virtual reality experiment to study pedestrian perception of future street scenarios</a></div>
             <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Argota Sánchez-Vaquerizo, Hausladen et al.</div>
             <div class="pub-tags">
               <span class="pub-tag tag-c">Causal methods</span>
