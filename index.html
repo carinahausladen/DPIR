@@ -11,7 +11,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #f7f5f0;
+    --bg: #ffffff;
     --ink: #1a1714;
     --ink-mid: #4a4640;
     --ink-soft: #8a857e;
@@ -98,7 +98,7 @@
   .theme-header:hover .theme-name { color: var(--accent); }
   .theme-stripe { width: 4px; height: 22px; border-radius: 2px; flex-shrink: 0; }
   .theme-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); transition: color 0.15s; flex: 1; }
-  .theme-count { font-size: 0.8rem; color: var(--ink-soft); background: var(--bg); border: 1px solid var(--rule); border-radius: 20px; padding: 2px 10px; white-space: nowrap; }
+  .theme-count { font-size: 0.8rem; color: var(--ink-soft); background: #f4f4f4; border: 1px solid var(--rule); border-radius: 20px; padding: 2px 10px; white-space: nowrap; }
   .theme-toggle { font-size: 1.2rem; color: var(--ink-faint); line-height: 1; width: 18px; text-align: center; }
   .theme-body { overflow: hidden; transition: max-height 0.35s ease; }
   .theme:last-child .theme-header { border-bottom: 1px solid var(--rule); }
@@ -112,9 +112,9 @@
 
   /* ── Research programme pillars ── */
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
-  .pillar { padding: 1rem 1rem 1.1rem 1.15rem; border-left: 3px solid; background: #fff; border-radius: 1px; }
-  .pillar-head { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.55rem; }
-  .pillar-body { font-size: 0.84rem; color: var(--ink-mid); line-height: 1.65; }
+  .pillar { padding: 1.2rem 1.2rem 1.4rem 1.3rem; border-left: 3px solid; background: var(--accent); border-radius: 1px; }
+  .pillar-head { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.6rem; color: var(--cyan); }
+  .pillar-body { font-size: 0.84rem; color: rgba(255,255,255,0.82); line-height: 1.65; }
 
   footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 
@@ -162,16 +162,16 @@
 
   <p class="section-heading" style="margin-top: 3rem;">Research programme</p>
   <div class="pillars">
-    <div class="pillar" style="border-color: var(--blue);">
-      <div class="pillar-head" style="color: var(--blue);">Methods leadership</div>
+    <div class="pillar" style="border-color: var(--cyan);">
+      <div class="pillar-head">Methods leadership</div>
       <p class="pillar-body">Causal inference, experimental design, and quasi-experimental identification applied to political and social questions. I lead international mass-reproducibility initiatives (Nature, 2026) and develop computational tools — including machine learning and inverse reinforcement learning — for behavioural social science.</p>
     </div>
     <div class="pillar" style="border-color: var(--teal);">
-      <div class="pillar-head" style="color: var(--teal);">Democratic participation &amp; institutions</div>
+      <div class="pillar-head">Democratic participation &amp; institutions</div>
       <p class="pillar-body">How institutional design — voting rules, participatory budgeting, digital deliberation — shapes political legitimacy, fairness, and collective welfare. Empirical work with national platforms and Swiss municipalities, bridging experimental political science and real-world policy implementation.</p>
     </div>
     <div class="pillar" style="border-color: var(--amber);">
-      <div class="pillar-head" style="color: var(--amber);">Social policy &amp; inequality</div>
+      <div class="pillar-head">Social policy &amp; inequality</div>
       <p class="pillar-body">Causal evidence on labour market discrimination, behavioural compliance, and social interventions. Meta-analytic and field-experimental work — combining audit studies, chat data, and computational text analysis — with direct implications for anti-discrimination, public health, and governance policy.</p>
     </div>
   </div>
