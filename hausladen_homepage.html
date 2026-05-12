@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carina I. Hausladen — Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --ink: #1a1714;
+    --ink-mid: #4a4640;
+    --ink-soft: #8a857e;
+    --ink-faint: #c4bfb8;
+    --accent: #002147;        /* Oxford Blue */
+    --cyan:   #00F3FF;        /* Oxford accent cyan */
+    --rule: #e0dbd4;
+
+    --blue:   #002147;        /* Oxford Blue */
+    --teal:   #1a7a5e;
+    --purple: #5c4b9e;
+    --amber:  #9a6b1a;
+    --coral:  #b84a2e;
+
+    /* Three tag families */
+    --tc-bg: #e6eef5; --tc-fg: #002147; --tc-border: #8aaecf;   /* rct           — Oxford blue */
+    --te-bg: #d6feff; --te-fg: #002147; --te-border: #00c8d4;   /* quasi         — Oxford cyan */
+    --ti-bg: #fdf3e0; --ti-fg: #6a4010; --ti-border: #e0ba70;   /* framework     — amber       */
+    --tr-bg: #fce9e4; --tr-fg: #7a1e0d; --tr-border: #e8967a;   /* repro         — coral       */
+    --tf-bg: #f0ecfa; --tf-fg: #3a1f6e; --tf-border: #c4aeed;   /* first author  — purple      */
+  }
+
+  html { font-size: 16px; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; border-top: 3px solid var(--cyan); }
+
+  .page { max-width: 820px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── Header ── */
+  header { padding: 4rem 0 3rem; border-bottom: 1px solid var(--rule); }
+  .header-inner { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; }
+  .name { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: -0.01em; line-height: 1.1; color: var(--ink); }
+  .name em { font-style: italic; color: var(--ink-mid); }
+  .affiliation { font-size: 0.875rem; color: var(--ink-soft); margin-top: 0.6rem; letter-spacing: 0.02em; }
+  .bio { margin-top: 1.2rem; font-size: 0.975rem; color: var(--ink-mid); max-width: 560px; line-height: 1.75; }
+  .header-links { display: flex; gap: 0.5rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .header-links a { font-size: 0.8rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); padding: 5px 14px; border-radius: 2px; transition: background 0.15s, color 0.15s; }
+  .header-links a:hover { background: var(--accent); color: #fff; }
+  .stats-row { display: flex; gap: 2.5rem; text-align: right; flex-shrink: 0; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; color: var(--accent); }
+  .stat-label { font-size: 0.75rem; color: var(--ink-soft); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 3px; }
+
+  .section-heading { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 3rem 0 1rem; }
+
+  /* ── Filter tags ── */
+  .filter-tags { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .tag {
+    font-size: 0.82rem;
+    font-weight: 400;
+    padding: 6px 16px;
+    border-radius: 3px;
+    border: 1px solid;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.15s, transform 0.12s, box-shadow 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .tag:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.10); }
+  .tag.active { box-shadow: 0 0 0 2px var(--cyan); font-weight: 500; }
+  .tag.dimmed { opacity: 0.28; transform: none; box-shadow: none; }
+
+  .tag-rct   { background: var(--tc-bg); color: var(--tc-fg); border-color: var(--tc-border); }
+  .tag-quasi { background: var(--te-bg); color: var(--te-fg); border-color: var(--te-border); }
+  .tag-fw    { background: var(--ti-bg); color: var(--ti-fg); border-color: var(--ti-border); }
+  .tag-repro { background: var(--tr-bg); color: var(--tr-fg); border-color: var(--tr-border); }
+  .tag-f     { background: var(--tf-bg); color: var(--tf-fg); border-color: var(--tf-border); }
+
+  a.pub-link { color: inherit; text-decoration: none; }
+  a.pub-link:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Inline pub tags (smaller, non-interactive) */
+  .pub-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+  .pub-tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 3px; border: 1px solid; pointer-events: none; }
+
+  /* Filter status bar */
+  .filter-bar { display: flex; align-items: center; gap: 10px; margin-top: 0.75rem; min-height: 24px; }
+  .filter-clear { font-size: 0.78rem; color: var(--ink-soft); background: none; border: 1px solid var(--rule); border-radius: 3px; padding: 3px 11px; cursor: pointer; display: none; transition: border-color 0.15s, color 0.15s; }
+  .filter-clear:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .filter-clear.visible { display: inline-block; }
+  .filter-status { font-size: 0.78rem; color: var(--ink-soft); font-style: italic; }
+
+  /* ── Theme blocks ── */
+  .theme { margin-bottom: 0.25rem; }
+  .theme-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 0; cursor: pointer; user-select: none; border-top: 1px solid var(--rule); }
+  .theme-header:hover .theme-name { color: var(--accent); }
+  .theme-stripe { display: none; }
+  .theme-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); transition: color 0.15s; flex: 1; }
+  .theme-count { font-size: 0.8rem; color: var(--ink-soft); background: #f4f4f4; border: 1px solid var(--rule); border-radius: 20px; padding: 2px 10px; white-space: nowrap; }
+  .theme-toggle { font-size: 1.2rem; color: var(--ink-faint); line-height: 1; width: 18px; text-align: center; }
+  .theme-body { overflow: hidden; transition: max-height 0.35s ease; }
+  .theme:last-child .theme-header { border-bottom: 1px solid var(--rule); }
+
+  .pub-grid { padding: 0.25rem 0 1.25rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+  .pub { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; }
+  .pub.hidden { display: none; }
+  .pub-title { font-size: 0.92rem; font-weight: 400; color: var(--ink); line-height: 1.5; }
+  .pub-meta { font-size: 0.8rem; color: var(--ink-soft); margin-top: 2px; line-height: 1.5; }
+  .pub-year { font-size: 0.78rem; font-weight: 500; color: var(--ink-soft); white-space: nowrap; padding-top: 2px; letter-spacing: 0.02em; text-align: right; }
+  .pub-cites { font-size: 0.72rem; color: var(--ink-faint); white-space: nowrap; text-align: right; margin-top: 3px; letter-spacing: 0.02em; }
+  .pub-right { display: flex; flex-direction: column; align-items: flex-end; }
+
+  /* ── Research programme pillars ── */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .pillar { padding: 1.2rem 1.2rem 1.4rem 1.3rem; border-left: 3px solid; background: var(--accent); border-radius: 1px; }
+  .pillar-head { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.6rem; color: var(--cyan); }
+  .pillar-body { font-size: 0.84rem; color: rgba(255,255,255,0.82); line-height: 1.65; }
+
+  footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .stats-row { justify-content: flex-start; }
+    .pillars { grid-template-columns: 1fr; }
+    .page { padding: 0 1.25rem 4rem; }
+    header { padding: 2.5rem 0 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1 class="name">Carina <em>I.</em> Hausladen</h1>
+        <p class="affiliation">University of Konstanz &nbsp;·&nbsp; Causal &amp; Experimental Methods &nbsp;·&nbsp; Politics &amp; Social Policy</p>
+        <nav class="header-links">
+          <a href="https://scholar.google.com/citations?user=hzSOg6MAAAAJ&hl=en&oi=ao">Google Scholar</a>
+          <a href="https://linkedin.com/in/carina-hausladen/">LinkedIn</a>
+          <a href="mailto:carina.hausladen@uni-konstanz.de">Email</a>
+        </nav>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-num">24</div>
+          <div class="stat-label">Publications</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">810</div>
+          <div class="stat-label">Citations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">12</div>
+          <div class="stat-label">h-index</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <p class="section-heading" style="margin-top: 3rem;">Filter by methodology</p>
+
+  <div class="filter-tags" id="tagPanel">
+    <span class="tag tag-rct" data-tag="rct" onclick="filterByTag(this)">
+      Lab &amp; online RCTs
+    </span>
+    <span class="tag tag-quasi" data-tag="quasi" onclick="filterByTag(this)">
+      Quasi-experiments
+    </span>
+    <span class="tag tag-fw" data-tag="fw" onclick="filterByTag(this)">
+      Frameworks for impact evaluation
+    </span>
+    <span class="tag tag-f" data-tag="first" onclick="filterByTag(this)">
+      First / joint-first author
+    </span>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-clear" id="clearBtn" onclick="clearFilter()">✕ Clear</button>
+    <span class="filter-status" id="filterStatus"></span>
+  </div>
+
+  <p class="section-heading" style="margin-top: 2.5rem;">Research &amp; publications</p>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 1 — Political economy & democratic participation
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t1">
+    <div class="theme-header" onclick="toggle('t1')">
+      <div class="theme-stripe" style="background: var(--blue);"></div>
+      <span class="theme-name">Political economy</span>
+      <span class="theme-count" id="t1-count">8 papers</span>
+      <span class="theme-toggle" id="t1-icon">+</span>
+    </div>
+    <div class="theme-body" id="t1-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental + impact: voting rules treated as policy intervention,
+             effect on legitimacy outcomes measured -->
+        <div class="pub" data-tags="rct first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1057/s41599-024-03056-8" class="pub-link">How voting rules impact legitimacy</a></div>
+            <div class="pub-meta">Humanities and Social Sciences Communications &nbsp;·&nbsp; Hausladen, Hänggli Fricker, Helbing, Kunz, Wang, Pournaras</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">18 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="rct">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1145/3665332" class="pub-link">Designing digital voting systems for citizens: achieving fairness and legitimacy in participatory budgeting</a></div>
+            <div class="pub-meta">Digital Government: Research and Practice &nbsp;·&nbsp; Yang, Hausladen, Peters, Pournaras, Hänggli Fricker, Helbing</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">35 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="quasi">
+          <div>
+            <div class="pub-title"><a href="https://ojs.aaai.org/index.php/AIES/article/view/31758" class="pub-link">LLM voting: human choices and AI collective decision making</a></div>
+            <div class="pub-meta">AAAI/ACM Conference on AI, Ethics, and Society &nbsp;·&nbsp; Yang, Dailisan, Korecki, Hausladen, Helbing</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">104 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1098/rsta.2024.0098" class="pub-link">Exploring legitimacy in a municipal budget decision in Switzerland</a></div>
+            <div class="pub-meta">Philosophical Transactions of the Royal Society A &nbsp;·&nbsp; Hänggli Fricker, Wellings, Zai, Yang, Hausladen et al.</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">7 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="fw">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1016/j.jocs.2023.102061" class="pub-link">Democracy by design: perspectives for digitally assisted, participatory upgrades of society</a></div>
+            <div class="pub-meta">Journal of Computational Science &nbsp;·&nbsp; Helbing, Mahajan, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-fw">Framework</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2023</div><div class="pub-cites">172 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title"><a href="https://arxiv.org/abs/2307.10903" class="pub-link">Votelab: a modular and adaptive experimentation platform for online collective decision making</a></div>
+            <div class="pub-meta">arXiv &nbsp;·&nbsp; Kunz, Banaie, Sharma, Hausladen, Helbing, Pournaras</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2023</div><div class="pub-cites">3 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="repro first">
+          <div>
+            <div class="pub-title"><a href="https://ideas.repec.org/p/zbw/i4rdps/99.html" class="pub-link">Replicating "Run-off elections in the laboratory"</a></div>
+            <div class="pub-meta">I4R Discussion Paper Series &nbsp;·&nbsp; Hausladen, Hu, Levin</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">3 cites</div></div>
+        </div>
+        <div class="pub" data-tags="fw first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1016/j.scs.2022.103942" class="pub-link">Participatory resilience: surviving, recovering and improving together</a></div>
+            <div class="pub-meta">Sustainable Cities and Society &nbsp;·&nbsp; Mahajan*, Hausladen* et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-fw">Framework</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2022</div><div class="pub-cites">125 cites</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 2 — Poverty, social inequalities & labour markets
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t2">
+    <div class="theme-header" onclick="toggle('t2')">
+      <div class="theme-stripe" style="background: var(--teal);"></div>
+      <span class="theme-name">Social inequalities &amp; labour markets</span>
+      <span class="theme-count" id="t2-count">4 papers</span>
+      <span class="theme-toggle" id="t2-icon">+</span>
+    </div>
+    <div class="theme-body" id="t2-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental + impact: audit/correspondence field experiments,
+             meta-analysis of causal callback effects — core impact evaluation -->
+        <div class="pub" data-tags="quasi first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1371/journal.pone.0304723" class="pub-link">Perceived warmth and competence predict callback rates in meta-analyzed North American labour market experiments</a></div>
+            <div class="pub-meta">PLoS ONE &nbsp;·&nbsp; Hausladen*, Gallo*, Hsu, Jenkins, Ona, Camerer</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">7 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="quasi first">
+          <div>
+            <div class="pub-title"><a href="https://dl.acm.org/doi/10.1145/3715275.3732041" class="pub-link">Social perception of faces in a vision-language model</a></div>
+            <div class="pub-meta">ACM FAccT &nbsp;·&nbsp; Hausladen, Knott, Camerer, Perona</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2025</div><div class="pub-cites">15 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="fw">
+          <div>
+            <div class="pub-title"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3771289" class="pub-link">Socio-economic implications of the digital revolution</a></div>
+            <div class="pub-meta">Handbook of Complexity Economics &nbsp;·&nbsp; Helbing &amp; Hausladen</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-fw">Framework</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">19 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="fw">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.3390/su132011162" class="pub-link">Ethics of smart cities: towards value-sensitive design and co-evolving city life</a></div>
+            <div class="pub-meta">Sustainability &nbsp;·&nbsp; Helbing, Fanitabasi, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-fw">Framework</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2021</div><div class="pub-cites">107 cites</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 3 — Behavioural economics & decision-making
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t3">
+    <div class="theme-header" onclick="toggle('t3')">
+      <div class="theme-stripe" style="background: var(--purple);"></div>
+      <span class="theme-name">Behavioural economics &amp; decision-making</span>
+      <span class="theme-count" id="t3-count">6 papers</span>
+      <span class="theme-toggle" id="t3-icon">+</span>
+    </div>
+    <div class="theme-body" id="t3-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + experimental: controlled lab experiment; IRL recovers latent
+             intentions — causal test of behavioural interventions for policy compliance -->
+        <div class="pub" data-tags="quasi first">
+          <div>
+            <div class="pub-title"><a href="https://arxiv.org/abs/2601.08803" class="pub-link">Identifying latent intentions via inverse reinforcement learning in repeated linear public good games</a></div>
+            <div class="pub-meta">arXiv &nbsp;·&nbsp; Hausladen, Schubert, Engel</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2026</div></div>
+        </div>
+
+        <div class="pub" data-tags="rct first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.3389/frbhe.2023.1337312" class="pub-link">Color me honest! Time pressure and dis(honest) behavior</a></div>
+            <div class="pub-meta">Frontiers in Behavioral Economics &nbsp;·&nbsp; Hausladen &amp; Nikolaychuk</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">5 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.3389/fphy.2023.1125270" class="pub-link">How do circadian rhythms and neural synchrony shape networked cooperation?</a></div>
+            <div class="pub-meta">Frontiers in Physics &nbsp;·&nbsp; Vasiliauskaite &amp; Hausladen</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2023</div></div>
+        </div>
+
+        <div class="pub" data-tags="rct first">
+          <div>
+            <div class="pub-title"><a href="https://scholar.google.com/citations?user=hzSOg6MAAAAJ&hl=en" class="pub-link">Behavioral economics-enhanced: machine learning and decision making</a></div>
+            <div class="pub-meta">PhD Thesis &nbsp;·&nbsp; University of Cologne</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2020</div></div>
+        </div>
+        <div class="pub" data-tags="quasi">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1038/s41598-024-69447-8" class="pub-link">Early morning and evening usage habits increase misinformation spread</a></div>
+            <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Stockinger, Gallotti, Hausladen</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">5 cites</div></div>
+        </div>
+        <div class="pub" data-tags="quasi first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1016/j.socec.2024.102164" class="pub-link">Predicting compliance: leveraging chat data for supervised classification in experimental research</a></div>
+            <div class="pub-meta">Journal of Behavioral and Experimental Economics &nbsp;·&nbsp; Hausladen, Fochmann, Mohr</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">3 cites</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════
+       THEME 5 — Research methods & reproducibility
+       ══════════════════════════════════════════════════ -->
+  <div class="theme" id="t5">
+    <div class="theme-header" onclick="toggle('t5')">
+      <div class="theme-stripe" style="background: var(--coral);"></div>
+      <span class="theme-name">Research methods &amp; reproducibility</span>
+      <span class="theme-count" id="t5-count">6 papers</span>
+      <span class="theme-toggle" id="t5-icon">+</span>
+    </div>
+    <div class="theme-body" id="t5-body" style="max-height: 0;">
+      <div class="pub-grid">
+
+        <!-- causal + impact: large-scale replication study of causal/quasi-experimental
+             economics and political science papers — directly assesses robustness of
+             impact evaluation evidence -->
+        <div class="pub" data-tags="repro">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1038/s41586-026-10251-x" class="pub-link">Reproducibility and robustness of economics and political science research</a></div>
+            <div class="pub-meta">Nature &nbsp;·&nbsp; Brodeur, Mikola, Cook, Hausladen et al.</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2026</div><div class="pub-cites">1 cite</div></div>
+        </div>
+
+        <div class="pub" data-tags="repro">
+          <div>
+            <div class="pub-title"><a href="https://ideas.repec.org/p/zbw/i4rdps/287.html" class="pub-link">Computational reproducibility and robustness of empirical economics and political science research</a></div>
+            <div class="pub-meta">I4R Discussion Paper Series &nbsp;·&nbsp; Brodeur, Mikola, Cook, Hausladen et al.</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2026</div></div>
+        </div>
+
+        <div class="pub" data-tags="rct">
+          <div>
+            <div class="pub-title"><a href="https://ideas.repec.org/p/zbw/i4rdps/195.html" class="pub-link">Comparing human-only, AI-assisted, and AI-led teams on assessing research reproducibility</a></div>
+            <div class="pub-meta">I4R Discussion Paper &nbsp;·&nbsp; Brodeur, Valenta, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2025</div><div class="pub-cites">15 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="repro">
+          <div>
+            <div class="pub-title"><a href="https://www.iza.org/publications/dp/16912" class="pub-link">Mass reproducibility and replicability: a new hope</a></div>
+            <div class="pub-meta">IZA Discussion Paper &nbsp;·&nbsp; Brodeur, Mikola, Cook et al.</div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">78 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="quasi first">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1016/j.irle.2020.105903" class="pub-link">Text classification of ideological direction in judicial opinions</a></div>
+            <div class="pub-meta">International Review of Law and Economics &nbsp;·&nbsp; Hausladen, Schubert, Ash</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-quasi">Quasi-experiment</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2020</div><div class="pub-cites">63 cites</div></div>
+        </div>
+
+        <div class="pub" data-tags="rct">
+          <div>
+            <div class="pub-title"><a href="https://doi.org/10.1038/s41598-024-55073-x" class="pub-link">A virtual reality experiment to study pedestrian perception of future street scenarios</a></div>
+            <div class="pub-meta">Scientific Reports &nbsp;·&nbsp; Argota Sánchez-Vaquerizo, Hausladen et al.</div>
+            <div class="pub-tags">
+              <span class="pub-tag tag-rct">Lab / online RCT</span>
+            </div>
+          </div>
+          <div class="pub-right"><div class="pub-year">2024</div><div class="pub-cites">25 cites</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Carina I. Hausladen &nbsp;·&nbsp; University of Konstanz</span>
+    <span>Citations via Google Scholar &nbsp;·&nbsp; Updated April 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  let activeTag = null;
+
+  function toggle(id) {
+    const body = document.getElementById(id + '-body');
+    const icon = document.getElementById(id + '-icon');
+    const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+    if (isOpen) {
+      body.style.maxHeight = '0';
+      icon.textContent = '+';
+    } else {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      icon.textContent = '×';
+    }
+  }
+
+  function filterByTag(el) {
+    const tag = el.dataset.tag;
+    if (activeTag === tag) { clearFilter(); return; }
+    activeTag = tag;
+
+    document.querySelectorAll('#tagPanel .tag').forEach(t => {
+      t.classList.toggle('active', t.dataset.tag === tag);
+      t.classList.toggle('dimmed', t.dataset.tag !== tag);
+    });
+
+    let total = 0;
+    for (let i of [1, 2, 3, 5]) {
+      const body = document.getElementById('t' + i + '-body');
+      const pubs = body.querySelectorAll('.pub');
+      let visible = 0;
+      pubs.forEach(pub => {
+        const tags = (pub.dataset.tags || '').split(' ').filter(Boolean);
+        const match = tags.includes(tag);
+        pub.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+      total += visible;
+      const isOpen = body.style.maxHeight !== '0px' && body.style.maxHeight !== '';
+      if (visible > 0) {
+        if (!isOpen) document.getElementById('t' + i + '-icon').textContent = '×';
+        setTimeout(() => { body.style.maxHeight = body.scrollHeight + 'px'; }, 10);
+      } else if (isOpen) {
+        body.style.maxHeight = '0';
+        document.getElementById('t' + i + '-icon').textContent = '+';
+      }
+      document.getElementById('t' + i + '-count').textContent =
+        visible + ' of ' + pubs.length + ' paper' + (pubs.length !== 1 ? 's' : '');
+    }
+
+    document.getElementById('filterStatus').textContent =
+      total + ' paper' + (total !== 1 ? 's' : '') + ' match this tag';
+    document.getElementById('clearBtn').classList.add('visible');
+  }
+
+  function clearFilter() {
+    activeTag = null;
+    document.querySelectorAll('#tagPanel .tag').forEach(t => t.classList.remove('active', 'dimmed'));
+    document.querySelectorAll('.pub').forEach(p => p.classList.remove('hidden'));
+    document.getElementById('filterStatus').textContent = '';
+    document.getElementById('clearBtn').classList.remove('visible');
+    for (let i of [1, 2, 3, 5]) {
+      const body = document.getElementById('t' + i + '-body');
+      const total = body.querySelectorAll('.pub').length;
+      document.getElementById('t' + i + '-count').textContent = total + ' papers';
+      if (body.style.maxHeight !== '0px' && body.style.maxHeight !== '') {
+        setTimeout(() => { body.style.maxHeight = body.scrollHeight + 'px'; }, 10);
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => { toggle('t1'); });
+</script>
+</body>
+</html>
